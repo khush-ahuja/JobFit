@@ -29,6 +29,19 @@ flowchart LR
 | **Transparent score** | 60% must-have coverage + 25% nice-to-have + 15% years of experience |
 | **Fabrication guard** | Drops rewrites that add any skill or number not in the original bullet |
 
+## Real-model run
+
+[`eval/run_eval.py`](eval/run_eval.py) runs the full pipeline 3 times per job on the sample resume, with `openai/gpt-oss-120b` on Groq (25 Nov 2026). Run it yourself with [`eval_colab.ipynb`](eval_colab.ipynb).
+
+| Job | Fit score (3 runs) | Rewrites suggested | Blocked by the guard | LLM calls / run | Tokens / run |
+|---|---|---|---|---|---|
+| GenAI Engineer | 97, 97, 97 | 21 | 0 | 4 | 2,842 |
+| Computer Vision Engineer | 29, 29, 29 | 21 | 0 | 4 | 3,087 |
+
+- **Scores are reproducible.** The fit score is computed deterministically from the matched skills, so the LLM's run-to-run variation never changes it.
+- **The guard blocked nothing in this run.** With a strong model and a well-written resume, none of the 42 suggested rewrites added a skill, tool or number. The guard is a safety net for weaker models and thinner resumes, not a filter that fires on every run. Its blocking behaviour is covered by the offline tests.
+- A typical run takes about 3 seconds. The Computer Vision runs averaged 22 seconds because they hit the free tier's rate limits and waited.
+
 ## Quick start
 
 ```bash
@@ -72,4 +85,4 @@ tests/        offline tests with a scripted LLM (no API key needed)
 pytest
 ```
 
-15 offline tests cover alias matching, ambiguous-word handling ("rest" vs REST APIs), skills-section detection, scoring, the hallucination check, the fabrication guard, the fallback when JD extraction fails, and the API.
+16 offline tests cover alias matching, ambiguous-word handling ("rest" vs REST APIs), skills-section detection, scoring, the hallucination check, the fabrication guard, the fallback when JD extraction fails, and the API.
