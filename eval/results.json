@@ -1,0 +1,11 @@
+{
+  "config": {"model": "groq/openai/gpt-oss-120b", "resume": "samples/resume_priya.md", "repeats": 3, "date": "2026-11-25"},
+  "results": {
+    "samples/jd_genai_engineer.md": {"runs": 3, "scores": [97], "rewrites_proposed": 21, "rewrites_blocked": 0,
+                                     "blocked_share": 0.0, "avg_latency_s": 2.78, "llm_calls_per_run": 4.0,
+                                     "tokens_per_run": 2842},
+    "samples/jd_cv_engineer.md": {"runs": 3, "scores": [29], "rewrites_proposed": 21, "rewrites_blocked": 0,
+                                  "blocked_share": 0.0, "avg_latency_s": 21.65, "llm_calls_per_run": 4.0,
+                                  "tokens_per_run": 3087}
+  }
+}
